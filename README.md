@@ -1,4 +1,4 @@
-# At-Home Purple Team Lab#
+# At-Home Purple Team Lab
 The goal of this guide is to provide users with a step-by-step process to create an easily accessible at-home lab. This lab will enable users to perform both simple and advanced attacks, as well as develop effective defense strategies. By utilizing the Docker image provided by MITRE's Caldera framework on one virtual machine (referred to as the Red Team machine), users can simulate attacks based on the MITRE ATT&CK framework against a second virtual machine. This setup allows for hands-on experience with attack techniques and the opportunity to develop effective defense mechanisms.
 
 ## Preparing the Lab Environment
@@ -42,8 +42,13 @@ Note: You can explore alternatives such as using Kali's built-in Armitage tool (
 5.Important: Run the command sysctl -w vm.max_map_count=262144 before executing the docker-compose up command to ensure the proper functioning of the elastic stack.
 Your at-home Purple Team lab should now be up and running. You can proceed with launching attacks, analyzing results, and preparing detections and mitigations based on the MITRE ATT&CK framework. Utilize Caldera as the offensive tool to mimic the tactics, techniques, and procedures (TTPs) of APT groups. As Threat Intelligence becomes available for different APT groups, you can enrich these TTPs even further.
 
+
 To ensure realistic simulations, aim to use TTPs that closely resemble those employed by actual threat groups.
 
 Remember, this lab provides an excellent opportunity for both basic detection engineering and progressively advanced defense techniques. By practicing attacks and developing corresponding defenses based on the MITRE ATT&CK framework, you can gain valuable insights and enhance your cybersecurity skills.
+
+![Automated operation in Caldera](Caldera_operation_Discovery.png)
+![Wazuh GUI](Wazuh.png)
+![Wazuh Security View](Wazuh_security.png)
 
 Please feel free to customize and expand upon the guide based on your specific needs and preferences.
