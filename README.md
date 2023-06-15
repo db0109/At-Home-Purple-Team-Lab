@@ -1,30 +1,49 @@
-# At-Home-Purple-Team-Lab
-The Goal is to create a guide to allow users to create an easy to make at home lab that allows them to preform advanced and simple attacks along with seeing how to better defend against them. 
-By utilizing https://github.com/mitre/caldera as a docker image on one virtual machine(red teaming machine) to launch an attack based on the MITRE framework attack against a 2nd virtual machine you can simulate attacks based on the MITRE framework and learn how to defend against them.
+# At-Home Purple Team Lab#
+The goal of this guide is to provide users with a step-by-step process to create an easily accessible at-home lab. This lab will enable users to perform both simple and advanced attacks, as well as develop effective defense strategies. By utilizing the Docker image provided by MITRE's Caldera framework on one virtual machine (referred to as the Red Team machine), users can simulate attacks based on the MITRE ATT&CK framework against a second virtual machine. This setup allows for hands-on experience with attack techniques and the opportunity to develop effective defense mechanisms.
 
-I would highly reccomend running a SIEM on the 2nd virtual machines as this will give a more realistic image for seeing what the logs will look like when they are aggregated in an enterprise enviornment. I would highly reccomend using this mostly preconfigured Docker ELK stack https://github.com/sherifabdlnaby/elastdocker
-(Authors note: You should use whatever SIEM is most similar to the organization you want to work in, I chose this one because it was open source and more simple to use if you just use Docker-compose. I spent many hours hunting for the perfect one and failing).
+## Preparing the Lab Environment
+Offensive Machine Setup
 
-Finally after initiating the attack and seeing the results you will also be able to prepare detections for the attacks and proper mitigations. This should allow the oppurtunity for basic detection engineering and progressively more advanced defenses. 
+1. Install Virtualbox and set up a virtual machine running Kali Linux. You can find installation instructions here.
 
-By practicing and perfecting both attacks and TTP's according to the MITRE framework and the defenses to mitigate them you can take many hopefully useful lessons. 
+2. Install Docker Compose on the Kali Linux virtual machine. Follow the instructions provided by Digital Ocean's guide on how to install Docker Compose on Debian 10, which can be found here.
 
-With Caldera as the offensive tool you can also mimic more APT groups TTP's from start to finish of the Mitre Framework. You can enrich these TTP's even more as Threat Intelligence becomes available on different APT groups. 
+3. Install Caldera by following the instructions provided in the Caldera GitHub repository: https://github.com/mitre/caldera.
 
-It is important to remember to make the simulations as real as possible you want to make sure to use TTP's that are as close as possible to the real threat groups. 
+## Defensive Machine Setup
+1. Install Virtualbox and set up another virtual machine running Kali Linux Purple (referred to as the Blue Team machine).
+
+2. Install Docker Compose on the Blue Team machine using the instructions provided in the Digital Ocean guide mentioned earlier.
+Install Wazuh, an open-source endpoint protection system and log aggregator, to act as a SIEM on the Blue Team machine. Use the Wazuh Docker GitHub repository for installation: https://github.com/wazuh/wazuh-docker.git.
+
+3. Enroll the agent to aggregate logs in Wazuh by following the provided instructions (usually two commands that you copy and paste).
+
+Note: To avoid potential issues with the elastic stack, run the following command before executing the docker-compose up command: sysctl -w vm.max_map_count=262144.
 
 
-**Reccomended tools**
-Offensive machine: 
--Virtualbox running Kali Linux
-- Docker container or Install of Caldera https://github.com/mitre/caldera 
-
+## Recommended Tools
+Offensive Machine:
+Virtualbox running Kali Linux
+Docker Compose
+Docker container or install of Caldera (https://github.com/mitre/caldera)
 Defensive Machine:
-- Virtualbox Kali Purple
-- Docker container running https://github.com/sherifabdlnaby/elastdocker (You don't need a SIEM but to get the most from the Blue Team portions it would be wise to run it for the benefit of seeing the logs aggregated like they should be in a SOC). (As an added bonus if you come across an attack that isn't being logged you can perform detection engineering to engineer a detection for that attack in the future). 
+Virtualbox running Kali Linux Purple (Blue Team machine)
+Docker Compose
+Docker container running Wazuh (SIEM) (https://github.com/wazuh/wazuh-docker.git)
+Access the SIEM at http://youripaddress (default password: admin SecretPassword)
+Enroll the agent to aggregate logs by executing the provided enrollment commands.
+Note: You can explore alternatives such as using Kali's built-in Armitage tool (GUI for Metasploit) as the offensive machine or Security Onion as the Blue Team machine. Additionally, running a Docker container with the ELK stack is another option for log aggregation.
 
-Alternatives: You can also run a kali virtual machine running Armitage https://www.kali.org/tools/armitage/ instead of Caldera, Caldera makes it easier to automate a larger that can mimic an ATP group. However Armitage is essentially a GUI for metasploit and can also be used as the offensive machine
-- Kali's built in Armitage tool https://www.kali.org/tools/armitage/ can also be used as the offensive machine. I would reccomend this if you are more interested in individual CVE's that can be exploited as the tool is mostly a GUI for Metasploit
-- Security Onion is also a possible choice for the Blue team machine it has a robust amount of security features built in and likely is more deserving of the 'SOC in a BOX' title that Kali Purple has. 
+## Running the Tools
+1. Ensure that both the offensive and defensive virtual machines are properly set up and running. (I recommend using the Bridged Adaptor network setting, this way both virtual machines have different IP addresses) 
+2. Install Docker Compose on both machines using the instructions mentioned earlier.
+3.Follow the Caldera installation guide provided in the Caldera GitHub repository (https://github.com/mitre/caldera) to install Caldera on the offensive machine.
+4. Use the Wazuh Docker GitHub repository (https://github.com/wazuh/wazuh-docker.git) to install the log aggregator or SIEM on the defensive machine.
+5.Important: Run the command sysctl -w vm.max_map_count=262144 before executing the docker-compose up command to ensure the proper functioning of the elastic stack.
+Your at-home Purple Team lab should now be up and running. You can proceed with launching attacks, analyzing results, and preparing detections and mitigations based on the MITRE ATT&CK framework. Utilize Caldera as the offensive tool to mimic the tactics, techniques, and procedures (TTPs) of APT groups. As Threat Intelligence becomes available for different APT groups, you can enrich these TTPs even further.
 
+To ensure realistic simulations, aim to use TTPs that closely resemble those employed by actual threat groups.
 
+Remember, this lab provides an excellent opportunity for both basic detection engineering and progressively advanced defense techniques. By practicing attacks and developing corresponding defenses based on the MITRE ATT&CK framework, you can gain valuable insights and enhance your cybersecurity skills.
+
+Please feel free to customize and expand upon the guide based on your specific needs and preferences.
